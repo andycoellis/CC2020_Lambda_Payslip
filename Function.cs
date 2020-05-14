@@ -49,8 +49,10 @@ namespace CC2020_Lambda_Payslip
                     {
                         var output = JsonConvert.SerializeObject(pay);
 
+                        LambdaLogger.Log($"\n\n{pay.EmpId}\n\n{output}");
+
                         var request = new PutObjectRequest
-                        {
+                        {                           
                             BucketName = BucketName,
                             Key = $"{pay.EmpId}/{DateTime.UtcNow.ToString("s", CultureInfo.CreateSpecificCulture("de-DE"))}",
                             ContentBody = output
