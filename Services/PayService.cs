@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using CC2020_Lambda_Payslip.Models;
 
 namespace CC2020_Lambda_Payslip.Services
@@ -60,8 +61,7 @@ namespace CC2020_Lambda_Payslip.Services
                                                 AspNetUsers employee,
                                                 Companies company,
                                                 List<Timesheets> employeeTimesheets,
-                                                PayAgreements payAgreement,
-                                                double payYTD
+                                                PayAgreements payAgreement
                                                 )
         {
 
@@ -109,7 +109,7 @@ namespace CC2020_Lambda_Payslip.Services
                 company,
                 startOfWeek,
                 pay,
-                payYTD,
+                GetYTD(employee.Id, company.Abn, employee.Payslips.ToList()),
                 baseHours,
                 satHours,
                 sunHours
@@ -117,26 +117,25 @@ namespace CC2020_Lambda_Payslip.Services
         }
 
         /// <summary>
-        /// Returns an employees gross pay in the given year
+        /// Returns an employees gross pay in the given year, WARNING, there is no date input
         /// </summary>
         /// <param name="empID"></param>
         /// <param name="cmpABN"></param>
         /// <param name="timesheets"></param>
         /// <returns></returns>
-        public double GetYTD(string empID, long cmpABN, List<Timesheets> timesheets)
+        public double GetYTD(string empID, long cmpABN, List<Payslips> payslips)
         {
             Func<Timesheets, double> hoursWorked = x => (double)((x.EndTime - x.StartTime) - x.Break).TotalHours;
 
             double grossPay = 0;
 
-            foreach (var entry in timesheets)
+            foreach (var entry in payslips)
             {
-                //if(entry.CompanyAbn == cmpABN && entry.EmployeeId.ToUpper() == empID.ToUpper())
-                //{
-                //    grossPay += entry
-                //}
+                if (entry.CompanyAbn == cmpABN && entry.EmployeeId.ToUpper() == empID.ToUpper())
+                {
+                    grossPay += entry.GrossPay;
+                }
             }
-
             return grossPay;
         }
 

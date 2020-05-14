@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 using Amazon.Lambda.Core;
 using Amazon.S3;
 using Amazon.S3.Model;
+using Microsoft.EntityFrameworkCore;
 using CC2020_Lambda_Payslip.Data;
 using CC2020_Lambda_Payslip.Services;
+using CC2020_Lambda_Payslip.Models;
+using Newtonsoft.Json;
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
@@ -20,24 +23,34 @@ namespace CC2020_Lambda_Payslip
 
         public async Task<string> FunctionHandler(string input, ILambdaContext context)
         {
-            var response = await PutS3Object("cc2020-timesheets", $"{input}.txt", "This is just something to put into the bucket");
+            List<WeeklyPayslip> payslips = RetrievePayslip();
 
-            return input?.ToUpper();
+
+            var response = await PutS3Object(payslips);
+
+            var reply = response ? $"{input} complete" : $"{input} failure"; 
+
+            return reply?.ToUpper();
         }
 
-        public static async Task<bool> PutS3Object(string bucket, string key, string content)
+        public static async Task<bool> PutS3Object(List<WeeklyPayslip> payslips)
         {
             try
             {
                 using (var client = new AmazonS3Client(Amazon.RegionEndpoint.USEast1))
                 {
-                    var request = new PutObjectRequest
+                    foreach (var pay in payslips)
                     {
-                        BucketName = bucket,
-                        Key = $"{key}/{DateTime.UtcNow.ToString("s", CultureInfo.CreateSpecificCulture("de-DE"))}",
-                        ContentBody = content
-                    };
-                    var response = await client.PutObjectAsync(request);
+                        var output = JsonConvert.SerializeObject(pay);
+
+                        var request = new PutObjectRequest
+                        {
+                            BucketName = BucketName,
+                            Key = $"{pay.EmpId}/{DateTime.UtcNow.ToString("s", CultureInfo.CreateSpecificCulture("de-DE"))}",
+                            ContentBody = output
+                        };
+                        var response = await client.PutObjectAsync(request);
+                    }
                 }
                 return true;
             }
@@ -48,13 +61,88 @@ namespace CC2020_Lambda_Payslip
             }
         }
 
-        public void RetrieveDB()
+        public List<WeeklyPayslip> RetrievePayslip()
         {
-            PayService _payservice = new PayService();
+            var _payservice = new PayService();
+            var payslips_all = new List<WeeklyPayslip>();
 
             using (var context = new TimesheetsContext())
             {
+                var payAgreements = context.PayAgreements;
+
+                var timesheets = context.Timesheets
+                                    .Where(x => x.Date >= MinDate(false)
+                                    && x.Date < MaxDate(false));
+
+                foreach(var payAgr in payAgreements)
+                {
+                    var empTimesheet = timesheets
+                                    .Where(x => x.EmployeeId == payAgr.EmployeeId
+                                    && x.CompanyAbn == payAgr.CompanyAbn).ToList();
+
+                    var employee = context.AspNetUsers
+                                    .Include(x => x.Payslips)
+                                    .SingleOrDefault(x => x.Id == payAgr.EmployeeId);
+
+                    var company = context.Companies
+                                    .SingleOrDefault(x => x.Abn == payAgr.CompanyAbn);
+
+                    var payslip_print = _payservice.GetEmpoyeeTimesheet(employee, company, empTimesheet, payAgr);
+
+                    payslips_all.Add(payslip_print);
+
+                    var payslip_database = new Payslips()
+                    {
+                        WeekBegininning = MinDate(false),
+                        GrossPay = Convert.ToDouble(payslip_print.Pay),
+                        PayYtd = Convert.ToDouble(payslip_print.PayYTD),
+                        Tax = Convert.ToDouble(payslip_print.Tax),
+                        BaseHours = Convert.ToDouble(payslip_print.BaseHours),
+                        SatHours = Convert.ToDouble(payslip_print.SatHours),
+                        SunHours = Convert.ToDouble(payslip_print.SunHours),
+                        CompanyAbn = Convert.ToInt64(payslip_print.CompanyABN),
+                        EmployeeId = payslip_print.EmpId                    
+                    };
+                    
+                    context.Payslips.Add(payslip_database);
+                }
+
+                context.SaveChangesAsync();
             };
+           
+            return payslips_all;
+        }
+
+        /// <summary>
+        /// Return the minimum date to filter timesheets,
+        /// true = financial year
+        /// </summary>
+        /// <param name="scope"></param>
+        /// <returns></returns>
+        public DateTime MinDate(bool financialYear)
+        {
+            if(!financialYear)
+            {
+                return DateTime.Now.AddDays(-((int)DateTime.Now.DayOfWeek - 1)).Date;
+            }
+
+            return new DateTime(0, 0, DateTime.Now.Year);
+        }
+
+        /// <summary>
+        /// Return the maximum date to filter timesheets,
+        /// true = financial year
+        /// </summary>
+        /// <param name="financialYear"></param>
+        /// <returns></returns>
+        public DateTime MaxDate(bool financialYear)
+        {
+            if (!financialYear)
+            {
+                return DateTime.Now.AddDays(-((int)DateTime.Now.DayOfWeek - 1)).AddDays(6).Date;
+            }
+
+            return new DateTime(0, 0, DateTime.Now.Year + 1);
         }
     }
 }
