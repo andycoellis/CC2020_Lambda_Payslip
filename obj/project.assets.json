@@ -11,6 +11,21 @@
           "lib/netstandard2.0/Amazon.Lambda.Core.dll": {}
         }
       },
+      "Amazon.Lambda.Logging.AspNetCore/3.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Amazon.Lambda.Core": "1.1.0",
+          "Microsoft.Extensions.Configuration.Abstractions": "2.1.0",
+          "Microsoft.Extensions.Logging": "2.1.0",
+          "Microsoft.Extensions.Logging.Abstractions": "2.1.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Amazon.Lambda.Logging.AspNetCore.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Amazon.Lambda.Logging.AspNetCore.dll": {}
+        }
+      },
       "Amazon.Lambda.Serialization.SystemTextJson/2.0.1": {
         "type": "package",
         "dependencies": {
@@ -2568,6 +2583,19 @@
         "lib/netstandard1.3/Amazon.Lambda.Core.xml",
         "lib/netstandard2.0/Amazon.Lambda.Core.dll",
         "lib/netstandard2.0/Amazon.Lambda.Core.xml"
+      ]
+    },
+    "Amazon.Lambda.Logging.AspNetCore/3.0.0": {
+      "sha512": "WaPdszlLac3iQ4nkBzaCxw9FfofaxeDOK4zphc9iDG2wve+c2kQMA2P2GA6+G70iZhPbVJEaEBG+DpPmOQbaRw==",
+      "type": "package",
+      "path": "amazon.lambda.logging.aspnetcore/3.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "amazon.lambda.logging.aspnetcore.3.0.0.nupkg.sha512",
+        "amazon.lambda.logging.aspnetcore.nuspec",
+        "lib/netstandard2.0/Amazon.Lambda.Logging.AspNetCore.dll",
+        "lib/netstandard2.0/Amazon.Lambda.Logging.AspNetCore.xml"
       ]
     },
     "Amazon.Lambda.Serialization.SystemTextJson/2.0.1": {
@@ -8398,6 +8426,7 @@
       "AWSSDK.Core >= 3.3.106.22",
       "AWSSDK.S3 >= 3.3.110.68",
       "Amazon.Lambda.Core >= 1.1.0",
+      "Amazon.Lambda.Logging.AspNetCore >= 3.0.0",
       "Amazon.Lambda.Serialization.SystemTextJson >= 2.0.1",
       "Microsoft.EntityFrameworkCore >= 3.1.4",
       "Microsoft.EntityFrameworkCore.SqlServer >= 3.1.4",
@@ -8451,6 +8480,10 @@
           "Amazon.Lambda.Core": {
             "target": "Package",
             "version": "[1.1.0, )"
+          },
+          "Amazon.Lambda.Logging.AspNetCore": {
+            "target": "Package",
+            "version": "[3.0.0, )"
           },
           "Amazon.Lambda.Serialization.SystemTextJson": {
             "target": "Package",

@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "NynV41Zl/XsaO3Syhh6ErP7HKyNKfGqkLvERA+PmIKcleVHpEQlvNggnLyROlzIkl3UbSPhIPL1Mk4cvnpHnnQ==",
+  "dgSpecHash": "waisHgSQ7cRSNNpZj6rkeZSZDU/PelGUw90L8EGlIMNKml8hMjnfiA0vcWwkxsgRyXxue9wPGVx2BPjpPEU0Lw==",
   "success": true,
   "projectFilePath": "/Users/andy/Documents/Programming/RMIT/CloudComputing/assignments/CC2020_Lambda_Payslip/CC2020_Lambda_Payslip.csproj",
   "expectedPackageFiles": [
     "/Users/andy/.nuget/packages/amazon.lambda.core/1.1.0/amazon.lambda.core.1.1.0.nupkg.sha512",
+    "/Users/andy/.nuget/packages/amazon.lambda.logging.aspnetcore/3.0.0/amazon.lambda.logging.aspnetcore.3.0.0.nupkg.sha512",
     "/Users/andy/.nuget/packages/amazon.lambda.serialization.systemtextjson/2.0.1/amazon.lambda.serialization.systemtextjson.2.0.1.nupkg.sha512",
     "/Users/andy/.nuget/packages/awssdk.core/3.3.106.22/awssdk.core.3.3.106.22.nupkg.sha512",
     "/Users/andy/.nuget/packages/awssdk.s3/3.3.110.68/awssdk.s3.3.3.110.68.nupkg.sha512",
