@@ -8,6 +8,7 @@ namespace CC2020_Lambda_Payslip.Models
         public Companies()
         {
             PayAgreements = new HashSet<PayAgreements>();
+            Payslips = new HashSet<Payslips>();
             Timesheets = new HashSet<Timesheets>();
         }
 
@@ -17,6 +18,7 @@ namespace CC2020_Lambda_Payslip.Models
         public string Email { get; set; }
 
         public virtual ICollection<PayAgreements> PayAgreements { get; set; }
+        public virtual ICollection<Payslips> Payslips { get; set; }
         public virtual ICollection<Timesheets> Timesheets { get; set; }
     }
 }

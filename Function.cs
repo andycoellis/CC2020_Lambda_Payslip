@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
-
 using Amazon.Lambda.Core;
 using Amazon.S3;
 using Amazon.S3.Model;
 using CC2020_Lambda_Payslip.Data;
+using CC2020_Lambda_Payslip.Services;
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
@@ -15,7 +15,9 @@ using CC2020_Lambda_Payslip.Data;
 namespace CC2020_Lambda_Payslip
 {
     public class Function
-    {      
+    {
+        private const string BucketName = "cc2020-payslips";
+
         public async Task<string> FunctionHandler(string input, ILambdaContext context)
         {
             var response = await PutS3Object("cc2020-timesheets", $"{input}.txt", "This is just something to put into the bucket");
@@ -48,6 +50,8 @@ namespace CC2020_Lambda_Payslip
 
         public void RetrieveDB()
         {
+            PayService _payservice = new PayService();
+
             using (var context = new TimesheetsContext())
             {
             };

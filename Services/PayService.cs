@@ -115,6 +115,31 @@ namespace CC2020_Lambda_Payslip.Services
                 sunHours
                 );
         }
+
+        /// <summary>
+        /// Returns an employees gross pay in the given year
+        /// </summary>
+        /// <param name="empID"></param>
+        /// <param name="cmpABN"></param>
+        /// <param name="timesheets"></param>
+        /// <returns></returns>
+        public double GetYTD(string empID, long cmpABN, List<Timesheets> timesheets)
+        {
+            Func<Timesheets, double> hoursWorked = x => (double)((x.EndTime - x.StartTime) - x.Break).TotalHours;
+
+            double grossPay = 0;
+
+            foreach (var entry in timesheets)
+            {
+                //if(entry.CompanyAbn == cmpABN && entry.EmployeeId.ToUpper() == empID.ToUpper())
+                //{
+                //    grossPay += entry
+                //}
+            }
+
+            return grossPay;
+        }
+
     }
 }
 
