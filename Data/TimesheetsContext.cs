@@ -25,6 +25,7 @@ namespace CC2020_Lambda_Payslip.Data
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<Companies> Companies { get; set; }
         public virtual DbSet<PayAgreements> PayAgreements { get; set; }
+        public virtual DbSet<Payslips> Payslips { get; set; }
         public virtual DbSet<Timesheets> Timesheets { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -188,6 +189,31 @@ namespace CC2020_Lambda_Payslip.Data
 
                 entity.HasOne(d => d.Employee)
                     .WithMany(p => p.PayAgreements)
+                    .HasForeignKey(d => d.EmployeeId);
+            });
+
+            modelBuilder.Entity<Payslips>(entity =>
+            {
+                entity.HasIndex(e => e.CompanyAbn);
+
+                entity.HasIndex(e => e.EmployeeId);
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.CompanyAbn).HasColumnName("CompanyABN");
+
+                entity.Property(e => e.EmployeeId)
+                    .IsRequired()
+                    .HasColumnName("EmployeeID");
+
+                entity.Property(e => e.PayYtd).HasColumnName("PayYTD");
+
+                entity.HasOne(d => d.CompanyAbnNavigation)
+                    .WithMany(p => p.Payslips)
+                    .HasForeignKey(d => d.CompanyAbn);
+
+                entity.HasOne(d => d.Employee)
+                    .WithMany(p => p.Payslips)
                     .HasForeignKey(d => d.EmployeeId);
             });
 
