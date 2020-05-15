@@ -22,18 +22,25 @@ namespace CC2020_Lambda_Payslip
 {
     public class Function
     {
-        private const string BucketName = "cc2020-payslips";
+        private const string BucketName = "cc2020-test";
 
         public async Task<string> FunctionHandler(string input, ILambdaContext context)
         {
             List<WeeklyPayslip> payslips = RetrievePayslip();
-
 
             var response = await PutS3Object(payslips);
 
             var reply = response ? $"{input} complete" : $"{input} failure";
 
             return reply?.ToUpper();
+        }
+
+        public async Task FunctionInit()
+        {
+            List<WeeklyPayslip> payslips = RetrievePayslip();
+
+            await PutS3Object(payslips);
+
         }
 
         public static async Task<bool> PutS3Object(List<WeeklyPayslip> payslips)
