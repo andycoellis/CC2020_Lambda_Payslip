@@ -22,7 +22,7 @@ namespace CC2020_Lambda_Payslip
 {
     public class Function
     {
-        private const string BucketName = "cc2020-test";
+        private const string BucketName = "cc2020-drop-box";
 
         public async Task<string> FunctionHandler(string input, ILambdaContext context)
         {
