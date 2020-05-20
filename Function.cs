@@ -54,7 +54,7 @@ namespace CC2020_Lambda_Payslip
 
                     foreach (var pay in payslips)
                     {
-                        var payslip = new { Details = pay };
+                        var payslip = new { Details = new[] { pay } };
 
                         var output = JsonConvert.SerializeObject(payslip);
 
@@ -63,7 +63,7 @@ namespace CC2020_Lambda_Payslip
                         var request = new PutObjectRequest
                         {                           
                             BucketName = BucketName,
-                            Key = $"{pay.EmpId}/{DateTime.UtcNow.ToString("s", CultureInfo.CreateSpecificCulture("de-DE"))}.json",
+                            Key = $"{pay.EmpId}-{DateTime.UtcNow.ToString("s", CultureInfo.CreateSpecificCulture("de-DE"))}.json",
                             ContentBody = output
                         };
                         var response = await client.PutObjectAsync(request);

@@ -11,13 +11,6 @@ namespace CC2020_Lambda_Payslip.Services
     /// </summary>
     public readonly struct WeeklyPayslip
     {
-        private WeeklyPayslip pay;
-
-        public WeeklyPayslip(WeeklyPayslip pay) : this()
-        {
-            this.pay = pay;
-        }
-
         public WeeklyPayslip(
                             AspNetUsers employee,
                             Companies company,
