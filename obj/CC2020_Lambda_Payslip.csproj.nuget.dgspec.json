@@ -14,7 +14,7 @@
         "outputPath": "/Users/andy/Documents/Programming/RMIT/CloudComputing/assignments/CC2020_Lambda_Payslip/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/andy/.config/NuGet/NuGet.Config"
+          "/Users/andy/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -90,7 +90,12 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.201/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.202/RuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "linux-x64": {
+          "#import": []
         }
       }
     }
