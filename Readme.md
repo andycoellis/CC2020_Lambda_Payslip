@@ -21,7 +21,6 @@
 **ASP.NET Core**
 - .NET Core SDK 3.1.202
 - .Net Core Runtime 3.1.4
-
 - VisualStudio Version 8.5.6 (build 11)
 
 #### Dependencies
