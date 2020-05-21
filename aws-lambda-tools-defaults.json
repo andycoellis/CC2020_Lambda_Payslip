@@ -12,5 +12,5 @@
   "function-runtime": "dotnetcore3.1",
   "function-memory-size": 256,
   "function-timeout": 30,
-  "function-handler": "CC2020_Lambda_Payslip::CC2020_Lambda_Payslip.Function::FunctionHandler"
+  "function-handler": "CC2020_Lambda_Payslip::CC2020_Lambda_Payslip.Function::FunctionInit"
 }

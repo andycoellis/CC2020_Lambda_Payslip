@@ -12,6 +12,7 @@ namespace CC2020_Lambda_Payslip.Models
             AspNetUserRoles = new HashSet<AspNetUserRoles>();
             AspNetUserTokens = new HashSet<AspNetUserTokens>();
             PayAgreements = new HashSet<PayAgreements>();
+            Payslips = new HashSet<Payslips>();
             Timesheets = new HashSet<Timesheets>();
         }
 
@@ -42,6 +43,7 @@ namespace CC2020_Lambda_Payslip.Models
         public virtual ICollection<AspNetUserRoles> AspNetUserRoles { get; set; }
         public virtual ICollection<AspNetUserTokens> AspNetUserTokens { get; set; }
         public virtual ICollection<PayAgreements> PayAgreements { get; set; }
+        public virtual ICollection<Payslips> Payslips { get; set; }
         public virtual ICollection<Timesheets> Timesheets { get; set; }
     }
 }

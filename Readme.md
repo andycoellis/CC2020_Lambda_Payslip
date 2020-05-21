@@ -1,50 +1,46 @@
-# AWS Lambda Empty Function Project
+## COSC2626 Cloud Computing Assignment 02
 
-This starter project consists of:
-* Function.cs - class file containing a class with a single function handler method
-* aws-lambda-tools-defaults.json - default argument settings for use with Visual Studio and command line deployment tools for AWS
+## AWS Lambda Function
 
-You may also have a test project depending on the options selected.
+*RMIT University Melbourne*
+<br>**group members:**
+> Andrew Ellis - s3747746
+<br>Shrey Parekh - s3710669
 
-The generated function handler is a simple method accepting a string argument that returns the uppercase equivalent of the input string. Replace the body of this method, and parameters, to suit your needs. 
+### Lambda Features
+**C# Script for Payslip Automation:** 
+>+ *Pay Service*
+>+ *Weekly Payslip Template*
+>+ *Push Weekly Payslip Object into S3 Bucket*
 
-## Here are some steps to follow from Visual Studio:
+#### Notes
+>This C# Script utilises Net Core's Entity Framework to generate all relevant payslips of the given week. The code is set to be called by an **AWS Lambda** in which on a trigger will generate a Weekly Payslip object of an employee and send, as a **JSON** into an AWS S3 Bucket.
 
-To deploy your function to AWS Lambda, right click the project in Solution Explorer and select *Publish to AWS Lambda*.
+#### System Requirements
 
-To view your deployed function open its Function View window by double-clicking the function name shown beneath the AWS Lambda node in the AWS Explorer tree.
+**ASP.NET Core**
+- .NET Core SDK 3.1.202
+- .Net Core Runtime 3.1.4
+- VisualStudio Version 8.5.6 (build 11)
 
-To perform testing against your deployed function use the Test Invoke tab in the opened Function View window.
+### Dependencies
+**Project SDK**
+- Microsoft.NET.Sdk
 
-To configure event sources for your deployed function, for example to have your function invoked when an object is created in an Amazon S3 bucket, use the Event Sources tab in the opened Function View window.
+**Frameworks**
+- Microsoft.NETCore.App (3.1.0)
 
-To update the runtime configuration of your deployed function use the Configuration tab in the opened Function View window.
+**NuGet** *packages*
+- Amazon.Lambda.Core
+- Amazon.Lambda.Logging.AspNetCore
+- Amazon.Lambda.Serialization.SystemTextJson
+- AWSSDK.Core
+- AWSSDK.S3
+- Microsoft.EntityFrameworkCore.Tools
+- Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore
+- Microsoft.VisualStudio.Web.CodeGeneration.Design
+- Microsoft.EntityFrameworkCore.SqlServer
+- AWSSDK.S3
 
-To view execution logs of invocations of your function use the Logs tab in the opened Function View window.
-
-## Here are some steps to follow to get started from the command line:
-
-Once you have edited your template and code you can deploy your application using the [Amazon.Lambda.Tools Global Tool](https://github.com/aws/aws-extensions-for-dotnet-cli#aws-lambda-amazonlambdatools) from the command line.
-
-Install Amazon.Lambda.Tools Global Tools if not already installed.
-```
-    dotnet tool install -g Amazon.Lambda.Tools
-```
-
-If already installed check if new version is available.
-```
-    dotnet tool update -g Amazon.Lambda.Tools
-```
-
-Execute unit tests
-```
-    cd "BlueprintBaseName/test/BlueprintBaseName.Tests"
-    dotnet test
-```
-
-Deploy function to AWS Lambda
-```
-    cd "BlueprintBaseName/src/BlueprintBaseName"
-    dotnet lambda deploy-function
-```
-# CC2020_Lambda_Payslip
+#### Application Architecture
+The application was with ASP.NET Core Lambda
