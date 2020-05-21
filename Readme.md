@@ -23,7 +23,7 @@
 - .Net Core Runtime 3.1.4
 - VisualStudio Version 8.5.6 (build 11)
 
-#### Dependencies
+### Dependencies
 **Project SDK**
 - Microsoft.NET.Sdk
 
